@@ -5,8 +5,16 @@ DROP DATABASE IF EXISTS SpotifyClone;
 CREATE DATABASE SpotifyClone;
 USE SpotifyClone;
 
+SELECT * FROM plano;
+SELECT * FROM usuario;
+SELECT * FROM artista;
+SELECT * FROM album;
+SELECT * FROM cancoes;
+SELECT * FROM historico_reproducao_musicas;
+SELECT * FROM seguindo_artista;
+
 CREATE TABLE plano(
-	plano_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  plano_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   plano VARCHAR(15) NOT NULL,
   valor_plano DOUBLE NOT NULL
 ) ENGINE=InnoDB;
@@ -15,13 +23,13 @@ INSERT INTO plano(
   plano,
   valor_plano)
 VALUES
-	('gratuito', 0),
+  ('gratuito', 0),
   ('familiar', 7.99),
   ('universitário',5.99),
   ('pessoal', 6.99);
 
 CREATE TABLE usuario(
-	usuario_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  usuario_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   nome VARCHAR(10) NOT NULL,
   idade INT NOT NULL,
   data_assinatura DATE NOT NULL,
@@ -30,12 +38,12 @@ CREATE TABLE usuario(
 ) ENGINE=InnoDB;
 
 INSERT INTO usuario(
-	nome,
+  nome,
   idade,
   plano_id,
-	data_assinatura)
+  data_assinatura)
 VALUES
-	('Thati', 23, 1, '2019-10-20'),
+  ('Thati', 23, 1, '2019-10-20'),
   ('Cintia', 35, 2, '2017-12-30'),
   ('Bill', 20, 3, '2019-06-05'),
   ('Roger', 45, 4, '2020-05-13'),
@@ -47,13 +55,13 @@ VALUES
   ('Paul', 46, 2, '2017-01-17');
 
 CREATE TABLE artista(
-	artista_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  artista_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   artista VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB;
 
 INSERT INTO artista(artista)
 VALUES
-	('Walter Phoenix'),
+  ('Walter Phoenix'),
   ('Peter Strong'),
   ('Lance Day'),
   ('Freedie Shannon'),
@@ -61,11 +69,11 @@ VALUES
   ('Fog');
 
 CREATE TABLE album(
-	album_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  album_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   album VARCHAR(255) NOT NULL,
   ano_lancamento YEAR,
   artista_id INT NOT NULL,
-	FOREIGN KEY (artista_id) REFERENCES artista(artista_id)
+  FOREIGN KEY (artista_id) REFERENCES artista(artista_id)
 ) ENGINE=InnoDB;
 
 
@@ -74,7 +82,7 @@ INSERT INTO album(
 	ano_lancamento,
 	artista_id)
 VALUES
-	('Envious', 1990, 1),
+  ('Envious', 1990, 1),
   ('Exuberant', 1993, 1),
   ('Hallowed Steam', 1995, 2),
   ('Incandescent', 1998, 3),
@@ -90,70 +98,74 @@ CREATE TABLE cancoes(
   cancoes VARCHAR(255) NOT NULL,
   duracao_segundos INT,
   album_id INT NOT NULL,
-  FOREIGN KEY (album_id) REFERENCES album(album_id)
+  artista_id INT NOT NULL,
+  FOREIGN KEY (album_id) REFERENCES album(album_id),
+  FOREIGN KEY (artista_id) REFERENCES artista(artista_id)
 ) ENGINE=InnoDB;
 
-INSERT INTO cancoes(
-	cancoes,
-	duracao_segundos,
-  album_id)
-VALUES
-	('Soul For Us', 200, 1),
-  ('Reflections Of Magic', 163, 1),
-  ('Dance With Her Own', 116, 1),
-  ('Troubles Of My Inner Fire', 203, 2),
-  ('Time Fireworks', 157, 2),
-  ('Magic Circus', 105, 3),
-  ('Honey, So Do I', 207, 3),
-  ("Sweetie, Let's Go Wild", 139, 3),
-  ('She Knows', 244, 3),
-  ('Fantasy For Me', 100, 4),
-  ('Celebration Of More', 146, 4),
-  ('Rock His Everything', 223, 4),
-  ('Home Forever', 231, 4),
-  ('Diamond Power', 241, 4),
-  ("Let's Be Silly", 132, 4),
-  ('Thang Of Thunder', 240, 5),
-  ('Words Of Her Life', 185, 5),
-  ('Without My Streets', 176, 5),
-  ('Need Of The Evening', 190, 6),
-  ('History Of My Roses', 222, 6),
-  ('Without My Love', 111, 6),
-  ('Walking And Game', 123, 6),
-  ('Young And Father', 197, 6),
-  ('Finding My Traditions', 179, 7),
-  ('Walking And Man', 229, 7),
-  ('Hard And Time', 135, 7),
-  ("Honey, I'm A Lone Wolf", 150, 7),
-  ("She Thinks I Won't Stay Tonight", 166, 8),
-  ("He Heard You're Bad For Me", 154, 8),
-  ("He Hopes We Can't Stay", 210, 8),
-  ('I Know I Know', 117, 8),
-  ("He's Walking Away", 159, 9),
-  ("He's Trouble", 138, 9),
-  ('I Heard I Want To Bo Alone', 120, 9),
-  ('I Ride Alone', 151, 9),
-  ('Honey', 79, 10),
-  ('You Cheated On Me', 95, 10),
-  ("Wouldn't It Be Nice", 213, 10),
-  ('Baby', 136, 10),
-  ('You Make Me Feel So..', 83, 10);
 
-CREATE TABLE historico_reproducao(
-	historico_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+INSERT INTO cancoes(
+  cancoes,
+  duracao_segundos,
+  album_id,
+  artista_id)
+VALUES
+  ('Soul For Us', 200, 1, 1),
+  ('Reflections Of Magic', 163, 1, 1),
+  ('Dance With Her Own', 116, 1,1),
+  ('Troubles Of My Inner Fire', 203, 2,1),
+  ('Time Fireworks', 157, 2, 1),
+  ('Magic Circus', 105, 3, 2),
+  ('Honey, So Do I', 207, 3, 2),
+  ("Sweetie, Let's Go Wild", 139, 3, 2),
+  ('She Knows', 244, 3, 2),
+  ('Fantasy For Me', 100, 4, 3),
+  ('Celebration Of More', 146, 4, 3),
+  ('Rock His Everything', 223, 4, 3),
+  ('Home Forever', 231, 4, 3),
+  ('Diamond Power', 241, 4, 3),
+  ("Let's Be Silly", 132, 4, 3),
+  ('Thang Of Thunder', 240, 5, 4),
+  ('Words Of Her Life', 185, 5, 4),
+  ('Without My Streets', 176, 5, 4),
+  ('Need Of The Evening', 190, 6, 4),
+  ('History Of My Roses', 222, 6, 4),
+  ('Without My Love', 111, 6, 4),
+  ('Walking And Game', 123, 6, 4),
+  ('Young And Father', 197, 6, 4),
+  ('Finding My Traditions', 179, 7, 5),
+  ('Walking And Man', 229, 7, 5),
+  ('Hard And Time', 135, 7, 5),
+  ("Honey, I'm A Lone Wolf", 150, 7, 5),
+  ("She Thinks I Won't Stay Tonight", 166, 8, 5),
+  ("He Heard You're Bad For Me", 154, 8, 5),
+  ("He Hopes We Can't Stay", 210, 8, 5),
+  ('I Know I Know', 117, 8, 5),
+  ("He's Walking Away", 159, 9, 5),
+  ("He's Trouble", 138, 9, 5),
+  ('I Heard I Want To Bo Alone', 120, 9, 5),
+  ('I Ride Alone', 151, 9, 5),
+  ('Honey', 79, 10, 6),
+  ('You Cheated On Me', 95, 10, 6),
+  ("Wouldn't It Be Nice", 213, 10, 6),
+  ('Baby', 136, 10, 6),
+  ('You Make Me Feel So..', 83, 10, 6);
+
+CREATE TABLE historico_reproducao_musicas(
   data_reproducao DATETIME NOT NULL,
   usuario_id INT NOT NULL,
   cancoes_id INT NOT NULL,
-	FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id),
-  FOREIGN KEY (cancoes_id) REFERENCES cancoes(cancoes_id)
+  FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id),
+  FOREIGN KEY (cancoes_id) REFERENCES cancoes(cancoes_id),
+  CONSTRAINT PRIMARY KEY(usuario_id, cancoes_id)
 ) ENGINE=InnoDB;
 
-INSERT INTO historico_reproducao(
+INSERT INTO historico_reproducao_musicas(
 	usuario_id,
 	cancoes_id,
 	data_reproducao)
 VALUES
-	(1, 36, '2020-02-28 10:45:55'),
+  (1, 36, '2020-02-28 10:45:55'),
   (1, 25, '2020-05-02 05:30:35'),
   (1, 23, '2020-03-06 11:22:33'),
   (1, 14, '2020-08-05 08:05:17'),
@@ -193,18 +205,18 @@ VALUES
   (10, 13, '2017-12-25 01:03:57');
 
 CREATE TABLE seguindo_artista(
-	seguindo_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   usuario_id INT NOT NULL,
   artista_id INT NOT NULL,
   FOREIGN KEY (usuario_id) REFERENCES usuario(usuario_id),
-  FOREIGN KEY (artista_id) REFERENCES artista(artista_id)
+  FOREIGN KEY (artista_id) REFERENCES artista(artista_id),
+  CONSTRAINT PRIMARY KEY(usuario_id, artista_id)
 ) ENGINE=InnoDB;
 
 INSERT INTO seguindo_artista(
-	usuario_id,
-	artista_id)
+  usuario_id,
+  artista_id)
 VALUES
-	(1, 1),
+  (1, 1),
   (1, 4),
   (1, 3),
   (2, 1),
