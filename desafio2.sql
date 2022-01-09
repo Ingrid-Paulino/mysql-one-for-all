@@ -1,12 +1,13 @@
-CREATE TABLE total_cancoes_artistas_albuns(
-  cancoes INT NOT NULL,
-  artistas INT NOT NULL,
-  albuns INT NOT NULL
-) ENGINE=InnoDB;
+-- SELECT 
+--   COUNT(cancoes),
+--   COUNT(DISTINCT(artista_id)) AS artistas,
+--   COUNT(DISTINCT(album_id)) AS albuns
+-- FROM SpotifyClone.cancoes;
 
-INSERT INTO total_cancoes_artistas_albuns(
-  cancoes,
-  artistas,
-  albuns)
-VALUES
-  (40, 6, 10);
+SELECT
+  COUNT(cancao_id) AS `cancoes`,
+  COUNT(DISTINCT(artista_id)) AS `artistas`,
+  COUNT(DISTINCT(cancoes.album_id)) AS `albuns`
+FROM SpotifyClone.cancoes
+  INNER JOIN SpotifyClone.albuns
+  ON cancoes.album_id = albuns.album_id;

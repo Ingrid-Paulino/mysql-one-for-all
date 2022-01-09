@@ -5,22 +5,22 @@ DROP DATABASE IF EXISTS SpotifyClone;
 CREATE DATABASE SpotifyClone;
 USE SpotifyClone;
 
-SELECT * FROM plano;
-SELECT * FROM usuario;
-SELECT * FROM artista;
-SELECT * FROM album;
-SELECT * FROM cancoes;
-SELECT * FROM historico_reproducao_musicas;
-SELECT * FROM seguindo_artista;
+-- SELECT * FROM plano;
+-- SELECT * FROM usuario;
+-- SELECT * FROM artista;
+-- SELECT * FROM album;
+-- SELECT * FROM cancoes;
+-- SELECT * FROM historico_reproducao_musicas;
+-- SELECT * FROM seguindo_artista;
 
 CREATE TABLE plano(
   plano_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  plano VARCHAR(15) NOT NULL,
+  plano_name VARCHAR(15) NOT NULL,
   valor_plano DOUBLE NOT NULL
 ) ENGINE=InnoDB;
 
 INSERT INTO plano(
-  plano,
+  plano_name,
   valor_plano)
 VALUES
   ('gratuito', 0),
@@ -30,7 +30,7 @@ VALUES
 
 CREATE TABLE usuario(
   usuario_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(10) NOT NULL,
+  nome_usuario VARCHAR(10) NOT NULL,
   idade INT NOT NULL,
   data_assinatura DATE NOT NULL,
   plano_id INT NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE usuario(
 ) ENGINE=InnoDB;
 
 INSERT INTO usuario(
-  nome,
+  nome_usuario,
   idade,
   plano_id,
   data_assinatura)
@@ -151,7 +151,7 @@ VALUES
   ('Baby', 136, 10, 6),
   ('You Make Me Feel So..', 83, 10, 6);
 
-CREATE TABLE historico_reproducao_musicas(
+CREATE TABLE historico_reproducao(
   data_reproducao DATETIME NOT NULL,
   usuario_id INT NOT NULL,
   cancoes_id INT NOT NULL,
@@ -160,7 +160,7 @@ CREATE TABLE historico_reproducao_musicas(
   CONSTRAINT PRIMARY KEY(usuario_id, cancoes_id)
 ) ENGINE=InnoDB;
 
-INSERT INTO historico_reproducao_musicas(
+INSERT INTO historico_reproducao(
 	usuario_id,
 	cancoes_id,
 	data_reproducao)
