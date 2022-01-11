@@ -1,5 +1,5 @@
 SELECT 
-	C.cancoes,
+	C.cancoes AS cancao,
     COUNT(H.cancoes_id) AS reproducoes
 FROM SpotifyClone.cancoes AS C
 INNER JOIN SpotifyClone.historico_reproducao AS H
