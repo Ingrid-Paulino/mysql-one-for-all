@@ -19,11 +19,13 @@ CREATE TABLE plano(
   valor_plano DOUBLE NOT NULL
 ) ENGINE=InnoDB;
 
+SELECT * FROM SpotifyClone.plano;
+
 INSERT INTO plano(
   plano_name,
   valor_plano)
 VALUES
-  ('gratuito', 0),
+  ('gratuito', 0.00),
   ('familiar', 7.99),
   ('universitário',5.99),
   ('pessoal', 6.99);
@@ -34,7 +36,7 @@ CREATE TABLE usuario(
   idade INT NOT NULL,
   data_assinatura DATE NOT NULL,
   plano_id INT NOT NULL,
-	FOREIGN KEY (plano_id) REFERENCES plano(plano_id)
+  FOREIGN KEY (plano_id) REFERENCES plano(plano_id)
 ) ENGINE=InnoDB;
 
 INSERT INTO usuario(
@@ -114,7 +116,7 @@ VALUES
   ('Reflections Of Magic', 163, 1, 1),
   ('Dance With Her Own', 116, 1,1),
   ('Troubles Of My Inner Fire', 203, 2,1),
-  ('Time Fireworks', 157, 2, 1),
+  ('Time Fireworks', 152, 2, 1),
   ('Magic Circus', 105, 3, 2),
   ('Honey, So Do I', 207, 3, 2),
   ("Sweetie, Let's Go Wild", 139, 3, 2),
