@@ -1,12 +1,11 @@
-SELECT
-	A.artista,
-    ALB.album,
-    COUNT(AR.artista_id) AS seguidores
-FROM SpotifyClone.artista AS A
-INNER JOIN SpotifyClone.album AS ALB
-	ON A.artista_id = ALB.artista_id
-INNER JOIN SpotifyClone.seguindo_artista AS AR
-	ON AR.artista_id = A.artista_id
-GROUP BY ALB.album_id,
-A.artista_id
-ORDER BY seguidores DESC, artista, album;
+SELECT 
+  ART.artista,
+  ALB.album,
+  COUNT(SEG.artista_id) AS seguidores
+FROM SpotifyClone.artistas AS ART
+INNER JOIN SpotifyClone.albuns AS ALB
+ON ART.artista_id = ALB.artista_id
+INNER JOIN SpotifyClone.seguindo_artistas AS SEG
+ON ALB.artista_id = SEG.artista_id
+GROUP BY ALB.album_id
+ORDER BY seguidores DESC, ART.artista, ALB.album;
